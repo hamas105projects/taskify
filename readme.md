@@ -64,7 +64,7 @@ Server akan berjalan di `localhost:8080`
 ### 🔐 1. REGISTER
 
 * **Method**: POST
-* **URL**: `/register`
+* **URL**: `api/auth/register`
 * **Body (JSON)**:
 
 ```json
@@ -78,7 +78,7 @@ Server akan berjalan di `localhost:8080`
 ### 🔐 2. LOGIN
 
 * **Method**: POST
-* **URL**: `/login`
+* **URL**: `api/auth/login`
 * **Body (JSON)**:
 
 ```json
@@ -111,7 +111,7 @@ Authorization: Bearer <JWT_TOKEN>
 ### ✅ 3. CREATE PROJECT
 
 * **Method**: POST
-* **URL**: `/projects`
+* **URL**: `api/projects`
 * **Headers**: Authorization
 * **Body (JSON)**:
 
@@ -126,19 +126,19 @@ Authorization: Bearer <JWT_TOKEN>
 ### ✅ 4. GET ALL PROJECTS
 
 * **Method**: GET
-* **URL**: `/projects`
+* **URL**: `api/projects`
 * **Headers**: Authorization
 
 ### ✅ 5. GET PROJECT BY ID
 
 * **Method**: GET
-* **URL**: `/projects/{id}`
+* **URL**: `api/projects/detail/{id}`
 * **Headers**: Authorization
 
 ### ✅ 6. UPDATE PROJECT
 
 * **Method**: PUT
-* **URL**: `/projects/{id}`
+* **URL**: `api/projects/detail/{id}`
 * **Headers**: Authorization
 * **Body (JSON)**:
 
@@ -152,7 +152,7 @@ Authorization: Bearer <JWT_TOKEN>
 ### ✅ 7. DELETE PROJECT
 
 * **Method**: DELETE
-* **URL**: `/projects/{id}`
+* **URL**: `api/projects/detail/{id}`
 * **Headers**: Authorization
 
 ---
@@ -162,7 +162,7 @@ Authorization: Bearer <JWT_TOKEN>
 ### ✅ 8. CREATE TASK
 
 * **Method**: POST
-* **URL**: `/projects/{project_id}/tasks`
+* **URL**: `api/projects/{project_id}/tasks`
 * **Headers**: Authorization
 * **Body (JSON)**:
 
@@ -178,19 +178,19 @@ Authorization: Bearer <JWT_TOKEN>
 ### ✅ 9. GET TASKS BY PROJECT
 
 * **Method**: GET
-* **URL**: `/projects/{project_id}/tasks`
+* **URL**: `api/projects/{project_id}/tasks`
 * **Headers**: Authorization
 
 ### ✅ 10. GET TASK BY ID
 
 * **Method**: GET
-* **URL**: `/projects/{project_id}/tasks/{task_id}`
+* **URL**: `api/projects/{project_id}/tasks/{task_id}`
 * **Headers**: Authorization
 
 ### ✅ 11. UPDATE TASK
 
 * **Method**: PUT
-* **URL**: `/projects/{project_id}/tasks/{task_id}`
+* **URL**: `api/projects/{project_id}/tasks/{task_id}`
 * **Headers**: Authorization
 * **Body (JSON)**:
 
@@ -206,7 +206,7 @@ Authorization: Bearer <JWT_TOKEN>
 ### ✅ 12. DELETE TASK
 
 * **Method**: DELETE
-* **URL**: `/projects/{project_id}/tasks/{task_id}`
+* **URL**: `api/projects/{project_id}/tasks/{task_id}`
 * **Headers**: Authorization
 
 ---
@@ -218,6 +218,47 @@ Authorization: Bearer <JWT_TOKEN>
 * `done`
 
 Gunakan salah satu nilai di atas saat membuat atau mengupdate task.
+
+## Struktur Folder ##
+taskify/
+├── config/                 # Inisialisasi database
+│   └── config.go
+│
+├── controllers/           # Handler-level untuk memanggil usecase
+│   └── auth_controller.go
+│   └── project_controller.go
+│   └── task_controller.go
+│
+├── usecase/               # Business logic (Register, Login, Project, Task)
+│   └── auth_usecase.go
+│   └── project_usecase.go
+│   └── task_usecase.go
+│
+├── models/                # Struct GORM untuk DB + relasi
+│   └── user.go
+│   └── project.go
+│   └── task.go
+│
+├── routes/                # Routing utama (gabung semua handler)
+│   └── auth_routes.go
+│   └── project_routes.go
+│   └── task_routes.go
+│
+├── middleware/            # JWT middleware dan sejenisnya
+│   └── auth_user_jwt.go
+│
+├── utils/                 # Fungsi utilitas (Hash, Token, dll)
+│   └── password.go
+│   └── jwt.go
+│   └── context.go
+│
+├── .env                   # Environment variables
+├── .env.example           # Contoh environment file
+├── main.go                # Entry point aplikasi
+├── go.mod
+├── go.sum
+├── Dockerfile             # (Opsional)
+├── README.md
 
 ---
 
